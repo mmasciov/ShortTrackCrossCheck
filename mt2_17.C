@@ -145,8 +145,8 @@ void getYield()
   for(long int e = 0; e<nentries; ++e){
     t.GetEntry(e);
     
-    if(e%100000==0)
-      std::cout<<"Entry "<<e<<" / "<<nentries<<std::endl;
+//    if(e%100000==0)
+//      std::cout<<"Entry "<<e<<" / "<<nentries<<std::endl;
     
     DorkyEventIdentifier id(t.run, t.evt, t.lumi);
     if (is_duplicate(id) ){
@@ -161,11 +161,11 @@ void getYield()
     if(!(t.Flag_eeBadScFilter && t.Flag_globalSuperTightHalo2016Filter && t.Flag_goodVertices && t.Flag_HBHENoiseFilter && t.Flag_HBHENoiseIsoFilter && t.Flag_EcalDeadCellTriggerPrimitiveFilter && t.Flag_ecalBadCalibFilter && t.Flag_badMuonFilter && t.Flag_badChargedCandidateFilter)) continue;    
 
     // All triggers
-    //    if(!((t.HLT_PFHT1050 || t.HLT_PFHT890_Prescale || t.HLT_PFHT780_Prescale || t.HLT_PFHT680_Prescale || t.HLT_PFHT590_Prescale || t.HLT_PFHT510_Prescale || t.HLT_PFHT430_Prescale || t.HLT_PFHT370_Prescale || t.HLT_PFHT250_Prescale || t.HLT_PFHT180_Prescale) || (t.HLT_PFHT500_PFMET100_PFMHT100 || t.HLT_PFMET120_PFMHT120 || t.HLT_PFMETNoMu120_PFMHTNoMu120 || t.HLT_PFMETNoMu120_PFMHTNoMu120_PFHT60 || t.HLT_PFHT800_PFMET75_PFMHT75))) continue;
+    //if(!((t.HLT_PFHT1050 || t.HLT_PFHT890_Prescale || t.HLT_PFHT780_Prescale || t.HLT_PFHT680_Prescale || t.HLT_PFHT590_Prescale || t.HLT_PFHT510_Prescale || t.HLT_PFHT430_Prescale || t.HLT_PFHT370_Prescale || t.HLT_PFHT250_Prescale || t.HLT_PFHT180_Prescale) || (t.HLT_PFHT500_PFMET100_PFMHT100 || t.HLT_PFMET120_PFMHT120 || t.HLT_PFMETNoMu120_PFMHTNoMu120 || t.HLT_PFMET120_PFMHT120_PFHT60 || t.HLT_PFMETNoMu120_PFMHTNoMu120_PFHT60 || t.HLT_PFHT800_PFMET75_PFMHT75))) continue;
     // Only prescaled triggers
-    if(!((t.HLT_PFHT1050 || t.HLT_PFHT890_Prescale || t.HLT_PFHT780_Prescale || t.HLT_PFHT680_Prescale || t.HLT_PFHT590_Prescale || t.HLT_PFHT510_Prescale || t.HLT_PFHT430_Prescale || t.HLT_PFHT370_Prescale || t.HLT_PFHT250_Prescale || t.HLT_PFHT180_Prescale))) continue;
+    //if(!((t.HLT_PFHT1050 || t.HLT_PFHT890_Prescale || t.HLT_PFHT780_Prescale || t.HLT_PFHT680_Prescale || t.HLT_PFHT590_Prescale || t.HLT_PFHT510_Prescale || t.HLT_PFHT430_Prescale || t.HLT_PFHT370_Prescale || t.HLT_PFHT250_Prescale || t.HLT_PFHT180_Prescale))) continue;
     // Only un-prescaled triggers
-    //if(!((t.HLT_PFHT1050) || (t.HLT_PFHT500_PFMET100_PFMHT100 || t.HLT_PFMET120_PFMHT120 || t.HLT_PFMETNoMu120_PFMHTNoMu120 || t.HLT_PFMETNoMu120_PFMHTNoMu120_PFHT60 || t.HLT_PFHT800_PFMET75_PFMHT75))) continue;
+    if(!((t.HLT_PFHT1050) || (t.HLT_PFHT500_PFMET100_PFMHT100 || t.HLT_PFMET120_PFMHT120 || t.HLT_PFMETNoMu120_PFMHTNoMu120 || t.HLT_PFMET120_PFMHT120_PFHT60 || t.HLT_PFMETNoMu120_PFMHTNoMu120_PFHT60 || t.HLT_PFHT800_PFMET75_PFMHT75))) continue;
     
     // Event pre-selection
     if(t.nVert<=0) continue;
@@ -222,6 +222,13 @@ void getYield()
     int ntpe_LstV4hHt=0;
     int ntpe_LstcV4hHt=0;
 
+
+    //    if(t.run!=297176||t.lumi!=151||t.evt!=229442502) continue;
+    //    if(t.run!=303832||t.lumi!=641||t.evt!=791603285) continue;
+    //    if(t.run!=300514||t.lumi!=124||t.evt!=160978292) continue;
+    //    if(t.run!=303999||t.lumi!=174||t.evt!=300844277) continue;
+    //    if(t.run!=305832||t.lumi!=185||t.evt!=224829516) continue;
+    //    if(t.run!=305589||t.lumi!=567||t.evt!=1048950363) continue;
     for (int it = 0; it<t.ntracks; ++it){
       
       if(t.track_pt[it]<15.0) continue;
@@ -260,6 +267,9 @@ void getYield()
       
       bool allisosel = nisosel && nrelisosel && isosel && relisosel;
       bool allisoselSTC = nisoselSTC && nrelisoselSTC && isoselSTC && relisoselSTC;
+
+      //std::cout << t.run << " " << t.lumi << " " << t.evt << " " << t.ht << " " << t.nJet30 << " " << t.mt2 << " " << t.met_pt << " " << t.track_pt[it] << " " << t.track_eta[it] << " " << t.track_phi[it] << " " << t.track_nLayersWithMeasurement[it] << " " << t.track_nPixelLayersWithMeasurement[it] << " " << t.track_nLostInnerPixelHits[it] << " " << t.track_nLostOuterHits[it] << " " << t.track_isHighPurity[it] << " "  << t.track_ptErr[it]/((t.track_pt[it])*(t.track_pt[it])) << " " << niso << " " << nreliso << " " << iso << " " << reliso << std::endl;
+
       if(!allisoselSTC) continue;
 
       // Track categorization
@@ -399,8 +409,14 @@ void getYield()
 	}
 	else if(isM){
 	  if(t.mt2<100){
-	    if(t.nJet30<4) ++ntpe_MstF23;
-	    else if(t.nJet30>=4) ++ntpe_MstF4;
+	    if(t.nJet30<4) {
+	      ++ntpe_MstF23;
+	      //	      std::cout << t.run << " " << t.lumi << " " << t.evt << " " << t.ht << " " << t.nJet30 << " " << t.mt2 << " " << t.met_pt << " " << t.track_pt[it] << " " << t.track_eta[it] << " " << t.track_phi[it] << " " << t.track_nLayersWithMeasurement[it] << " " << t.track_nPixelLayersWithMeasurement[it] << " " << t.track_nLostInnerPixelHits[it] << " " << t.track_nLostOuterHits[it] << " " << t.track_isHighPurity[it] << " "  << pterrOPt2 << " " << niso << " " << nreliso << " " << iso << " " << reliso << std::endl;
+	    }
+	    else if(t.nJet30>=4){
+	      ++ntpe_MstF4;
+	      //	      std::cout << t.run << " " << t.lumi << " " << t.evt << " " << t.ht << " " << t.nJet30 << " " << t.mt2 << " " << t.met_pt << " " << t.track_pt[it] << " " << t.track_eta[it] << " " << t.track_phi[it] << " " << t.track_nLayersWithMeasurement[it] << " " << t.track_nPixelLayersWithMeasurement[it] << " " << t.track_nLostInnerPixelHits[it] << " " << t.track_nLostOuterHits[it] << " " << t.track_isHighPurity[it] << " "  << pterrOPt2 << " " << niso << " " << nreliso << " " << iso << " " << reliso << std::endl;	    
+	    }
 	  }
 	  else if(t.mt2>100 && t.mt2<200){
 	    if(t.ht<1000){
